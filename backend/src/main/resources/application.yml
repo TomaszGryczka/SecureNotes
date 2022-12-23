@@ -1,0 +1,11 @@
+spring:
+  # jpa configuration
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+
+  # database connection
+  datasource:
+    url: jdbc:mysql://db:3306/notes
+    username: notes
+    password: notes
