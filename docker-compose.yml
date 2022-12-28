@@ -46,6 +46,18 @@ services:
     networks:
       - network
 
+  keycloak-initializer:
+    container_name: keycloakinitializer-notes-app
+    build:
+      context: keycloakinitializer
+      dockerfile: Dockerfile
+    image: keycloakinitializer:latest
+    networks:
+      - network
+    depends_on:
+      keycloak:
+        condition: service_healthy
+
   keycloak:
     container_name: keycloak-notes-app
     image: quay.io/keycloak/keycloak:20.0.1

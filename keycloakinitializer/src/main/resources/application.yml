@@ -1,0 +1,15 @@
+keycloak:
+  server-url: http://keycloak:8080
+  realm-name: app
+  clients:
+    - id: frontend-web
+      redirect-url: http://localhost:4200/*
+  users:
+    - username: admin
+      password: admin
+      roles:
+        - MANAGER
+    - username: user
+      password: user
+      roles:
+        - USER
