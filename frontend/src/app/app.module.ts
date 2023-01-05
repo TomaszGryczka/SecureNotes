@@ -9,6 +9,9 @@ import { NewNoteComponent } from './components/new-note/new-note.component';
 import { NoteComponent } from './components/note/note.component';
 import {KeycloakAngularModule, KeycloakService} from "keycloak-angular";
 import {initializeKeycloak} from "./init/keycloak-init.factory";
+import {AngularMarkdownEditorModule} from "angular-markdown-editor";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
+import {MarkdownModule, MarkedOptions} from "ngx-markdown";
 
 @NgModule({
   declarations: [
@@ -21,7 +24,25 @@ import {initializeKeycloak} from "./init/keycloak-init.factory";
   imports: [
     BrowserModule,
     AppRoutingModule,
-    KeycloakAngularModule
+    KeycloakAngularModule,
+    AngularMarkdownEditorModule.forRoot({
+      iconlibrary: 'fa'
+    }),
+    MarkdownModule.forRoot({
+      markedOptions: {
+        provide: MarkedOptions,
+        useValue: {
+          gfm: true,
+          breaks: false,
+          pedantic: false,
+          smartLists: true,
+          smartypants: false,
+        },
+      },
+    }),
+    FormsModule,
+    MarkdownModule,
+    ReactiveFormsModule
   ],
   providers: [
     {
@@ -29,7 +50,8 @@ import {initializeKeycloak} from "./init/keycloak-init.factory";
       useFactory: initializeKeycloak,
       multi: true,
       deps: [KeycloakService],
-    }
+    },
+    AngularMarkdownEditorModule
   ],
   bootstrap: [AppComponent]
 })

@@ -1,1 +1,15 @@
-<p>new-note works!</p>
+<div class="ms-3">
+  <h1>Dodaj notatkę z ostylowaniem</h1>
+
+  <form [formGroup]="templateForm" novalidate>
+    <div class="editor">
+      <angular-markdown-editor textareaId="editor1" [options]="editorOptions" formControlName="body" inputmode="preview">
+      </angular-markdown-editor>
+    </div>
+  </form>
+
+  <div class="result-preview outline mt-3">
+    <h1>Sformatowany podgląd</h1>
+    <markdown [data]="markdownText"></markdown>
+  </div>
+</div>
