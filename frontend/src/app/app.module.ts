@@ -12,6 +12,7 @@ import {initializeKeycloak} from "./init/keycloak-init.factory";
 import {AngularMarkdownEditorModule} from "angular-markdown-editor";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {MarkdownModule, MarkedOptions} from "ngx-markdown";
+import {HttpClientModule} from "@angular/common/http";
 
 @NgModule({
   declarations: [
@@ -28,6 +29,7 @@ import {MarkdownModule, MarkedOptions} from "ngx-markdown";
     AngularMarkdownEditorModule.forRoot({
       iconlibrary: 'fa'
     }),
+    HttpClientModule,
     MarkdownModule.forRoot({
       markedOptions: {
         provide: MarkedOptions,

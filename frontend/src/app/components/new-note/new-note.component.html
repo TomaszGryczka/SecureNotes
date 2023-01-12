@@ -1,15 +1,45 @@
-<div class="ms-3">
-  <h1>Dodaj notatkę z ostylowaniem</h1>
-
-  <form [formGroup]="templateForm" novalidate>
-    <div class="editor">
-      <angular-markdown-editor textareaId="editor1" [options]="editorOptions" formControlName="body" inputmode="preview">
-      </angular-markdown-editor>
+<div class="row">
+  <div class="col-6 ms-3">
+    <h1>Dodaj notatkę z ostylowaniem</h1>
+    <form [formGroup]="templateForm" novalidate>
+      <div class="editor">
+        <angular-markdown-editor textareaId="editor1" [options]="editorOptions" formControlName="body"
+                                 inputmode="preview">
+        </angular-markdown-editor>
+      </div>
+    </form>
+    <div [formGroup]="noteForm">
+      <div class="form-check">
+        <input class="form-check-input" type="checkbox" value="" id="publicNote" formControlName="publicNote"
+        [attr.disabled]="isPublicNoteCheckBoxDisabled ? true : null">
+        <label class="form-check-label" for="publicNote">
+          Notatka publiczna
+        </label>
+      </div>
+      <div class="form-check">
+        <input class="form-check-input" type="checkbox" value="" id="privateNote" formControlName="privateNote"
+        [attr.disabled]="isPrivateNoteCheckBoxDisabled  ? true : null">
+        <label class="form-check-label" for="privateNote">
+          Notatka prywatna
+        </label>
+      </div>
+      <div class="form-check">
+        <input class="form-check-input" type="checkbox" value="" id="sharedNote" formControlName="sharedNote"
+        [attr.disabled]="isSharedNoteCheckBoxDisabled  ? true : null">
+        <label class="form-check-label" for="sharedNote">
+          Notatka współdzielona
+        </label>
+      </div>
+      <div class="mt-2">
+        <button class="btn btn-primary" (click)="saveNote()">ZAPISZ NOTATKĘ</button>
+      </div>
     </div>
-  </form>
+  </div>
+  <div class="col-4">
+    <div class="result-preview outline mt-3">
+      <h1>Sformatowany podgląd</h1>
+      <markdown [data]="markdownText"></markdown>
+    </div>
 
-  <div class="result-preview outline mt-3">
-    <h1>Sformatowany podgląd</h1>
-    <markdown [data]="markdownText"></markdown>
   </div>
 </div>

@@ -1,7 +1,7 @@
 plugins {
 	id 'java'
-	id 'org.springframework.boot' version '3.0.0'
-	id 'io.spring.dependency-management' version '1.1.0'
+	id 'org.springframework.boot' version '2.7.4'
+	id 'io.spring.dependency-management' version '1.0.14.RELEASE'
 }
 
 group = 'com.github.tomaszgryczka'
@@ -23,17 +23,19 @@ repositories {
 }
 
 dependencies {
-	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-	implementation 'org.springframework.boot:spring-boot-starter-security'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
-	implementation group: 'org.keycloak', name: 'keycloak-core', version: '20.0.1'
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 	compileOnly 'org.projectlombok:lombok'
-	runtimeOnly 'mysql:mysql-connector-java'
-	developmentOnly 'org.springframework.boot:spring-boot-devtools'
-	annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
 	annotationProcessor 'org.projectlombok:lombok'
+	runtimeOnly 'mysql:mysql-connector-java'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
-	testImplementation 'org.springframework.security:spring-security-test'
+	implementation 'org.springframework.boot:spring-boot-starter-oauth2-resource-server:2.7.5'
+//	implementation 'org.springframework.boot:spring-boot-starter-security:2.7.6'
+//	implementation 'org.hibernate:hibernate-validator:7.0.1.Final'
+//	implementation 'org.keycloak:keycloak-spring-boot-starter:15.0.2'
+	implementation 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.9.8'
+	implementation group: 'org.keycloak', name: 'keycloak-admin-client', version: '20.0.1'
+//	annotationProcessor group: 'org.springframework.boot', name: 'spring-boot-configuration-processor'
 }
 
 tasks.named('test') {

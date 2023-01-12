@@ -1,5 +1,6 @@
 keycloak:
-  server-url: http://keycloak:8080
+#  server-url: http://keycloak:8080
+  server-url: http://localhost:8081
   realm-name: app
   clients:
     - id: frontend-web

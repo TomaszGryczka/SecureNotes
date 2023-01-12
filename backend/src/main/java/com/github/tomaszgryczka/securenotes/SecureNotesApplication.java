@@ -4,10 +4,10 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class SecurenotesApplication {
+public class SecureNotesApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(SecurenotesApplication.class, args);
+		SpringApplication.run(SecureNotesApplication.class, args);
 	}
 
 }

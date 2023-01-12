@@ -2,10 +2,28 @@ spring:
   # jpa configuration
   jpa:
     hibernate:
-      ddl-auto: create-drop
+      ddl-auto: update
 
   # database connection
   datasource:
-    url: jdbc:mysql://db:3306/notes
+#    url: jdbc:mysql://db:3306/notes
+    url: jdbc:mysql://localhost:3306/notes
     username: notes
     password: notes
+
+app:
+  cors:
+    allowed-origins: http://localhost:4200
+#    allowed-origins: http://localhost:80
+  jwt:
+#    issuer-uri: http://keycloak:8080/realms/app
+    issuer-uri: http://localhost:8081/realms/app
+    resource-client-ids: frontend-web
+
+keycloak:
+#  auth-server-url: http://keycloak:8080
+  auth-server-url: http://localhost:8081
+  realm: app
+  resource: backend
+  public-client: true
+  principal-attribute: preferred_username

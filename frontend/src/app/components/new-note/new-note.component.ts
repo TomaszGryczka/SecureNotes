@@ -1,7 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {EditorInstance, EditorOption} from "angular-markdown-editor";
-import {FormBuilder, FormGroup} from "@angular/forms";
+import {FormBuilder, FormControl, FormGroup} from "@angular/forms";
 import {MarkdownService} from "ngx-markdown";
+import {NotesGatewayService} from "../../services/notes-gateway.service";
 
 @Component({
   selector: 'app-new-note',
@@ -14,10 +15,12 @@ export class NewNoteComponent implements OnInit {
   markdownText = '';
   showEditor = true;
   templateForm!: FormGroup;
+  noteForm!: FormGroup;
   editorOptions!: EditorOption;
 
   constructor(private fb: FormBuilder,
-              private markdownService: MarkdownService) {
+              private markdownService: MarkdownService,
+              private notesGateway: NotesGatewayService) {
   }
 
   ngOnInit(): void {
@@ -43,8 +46,9 @@ _Pochylone słowo_
 #### Cztery
 ##### Pięć
 
-![enter image description here](https://100procent-natury.pl/userdata/public/gfx/852/mandary.jpg "enter image title here")`;
+![MANDARYNKI](https://100procent-natury.pl/userdata/public/gfx/852/mandary.jpg "mandarynki :)")`;
     this.buildForm(this.markdownText);
+    this.buildNoteForm();
     this.onFormChanges();
   }
 
@@ -53,6 +57,26 @@ _Pochylone słowo_
       body: [markdownText],
       isPreview: [true]
     });
+  }
+
+  buildNoteForm() {
+    this.noteForm = this.fb.group({
+      privateNote: new FormControl(false, []),
+      publicNote: new FormControl(false, []),
+      sharedNote: new FormControl(false, [])
+    });
+  }
+
+  get isPublicNoteCheckBoxDisabled() {
+    return this.noteForm.get("privateNote")?.value || this.noteForm.get("sharedNote")?.value;
+  }
+
+  get isPrivateNoteCheckBoxDisabled() {
+    return this.noteForm.get("publicNote")?.value || this.noteForm.get("sharedNote")?.value;
+  }
+
+  get isSharedNoteCheckBoxDisabled() {
+    return this.noteForm.get("privateNote")?.value || this.noteForm.get("publicNote")?.value;
   }
 
   highlight() {
@@ -74,6 +98,12 @@ _Pochylone słowo_
       if (formData) {
         this.markdownText = formData.body;
       }
+    });
+  }
+
+  saveNote() {
+    this.notesGateway.saveNote(this.markdownText).subscribe(response => {
+      window.alert("Notatka zapisana!");
     });
   }
 }
