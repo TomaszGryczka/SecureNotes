@@ -6,10 +6,10 @@ keycloak:
     - id: frontend-web
       redirect-url: http://localhost:4200/*
   users:
-    - username: admin
-      password: admin
+    - username: test
+      password: test
       roles:
-        - MANAGER
+        - USER
     - username: user
       password: user
       roles:

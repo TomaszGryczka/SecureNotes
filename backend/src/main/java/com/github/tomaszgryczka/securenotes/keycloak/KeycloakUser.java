@@ -1,4 +1,4 @@
-package com.github.tomaszgryczka.securenotes.user;
+package com.github.tomaszgryczka.securenotes.keycloak;
 
 import lombok.Builder;
 import lombok.Data;

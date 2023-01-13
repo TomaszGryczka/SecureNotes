@@ -10,6 +10,19 @@
     </form>
     <div [formGroup]="noteForm">
       <div class="form-check">
+        <div>
+          <input class="form-check-input" type="checkbox" value="" id="encryptedNote" formControlName="encryptedNote"
+                 [attr.disabled]="isEncryptedNoteCheckBoxDisabled ? true : null">
+          <label class="form-check-label" for="publicNote">
+            Notatka zaszyfrowana
+          </label>
+        </div>
+        <div *ngIf="isEncryptedNoteSelected">
+          <label>Hasło powinno składać się z przynajmniej 8 znaków. Dwóch dużych liter i cyfr, jednego znaku specjalnego i trzech małych liter.</label>
+          <input type="password" class="form-control" id="password" placeholder="Podaj hasło..." formControlName="password">
+        </div>
+      </div>
+      <div class="form-check">
         <input class="form-check-input" type="checkbox" value="" id="publicNote" formControlName="publicNote"
         [attr.disabled]="isPublicNoteCheckBoxDisabled ? true : null">
         <label class="form-check-label" for="publicNote">
@@ -30,8 +43,16 @@
           Notatka współdzielona
         </label>
       </div>
+      <ng-container *ngIf="isSharedNoteSelected">
+        <div class="form-check ms-3" *ngFor="let user of users">
+          <input class="form-check-input" (change)="onChange(user, $any($event.target)?.checked)"name="{{ user.username" type="checkbox" id="{{user.username">
+          <label class="form-check-label" for="{{user.username}}">
+            {{user.username}}
+          </label>
+        </div>
+      </ng-container>
       <div class="mt-2">
-        <button class="btn btn-primary" (click)="saveNote()">ZAPISZ NOTATKĘ</button>
+        <button class="btn btn-primary" (click)="saveNote()" [attr.disabled]="isNoteButtonAvailable ? null : true">ZAPISZ NOTATKĘ</button>
       </div>
     </div>
   </div>

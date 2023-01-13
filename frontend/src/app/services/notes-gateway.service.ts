@@ -1,6 +1,7 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
+import {User} from "./users-gateway.service";
 
 @Injectable({
   providedIn: 'root'
@@ -12,17 +13,26 @@ export class NotesGatewayService {
   constructor(private httpClient: HttpClient) {
   }
 
-  saveNote(markdownText: string): Observable<Note> {
-    const body = {
-      isEncrypted: false,
-      content: markdownText
-    };
-    return this.httpClient.post<Note>(this.notesApiUrl + "/new", body);
+  saveNote(note: Note): Observable<Note> {
+    return this.httpClient.post<Note>(this.notesApiUrl + "/new", note);
+  }
+
+  getUserNotes(): Observable<Note[]> {
+    return this.httpClient.get<Note[]>(this.notesApiUrl + "/user/all");
   }
 }
 
 export interface Note {
   id: number,
-  isEncrypted: boolean,
+  status: NoteStatus
+  password: string,
   content: string
+  sharedToUsers: User[];
+}
+
+export enum NoteStatus {
+  ENCRYPTED = "ENCRYPTED",
+  PUBLIC = "PUBLIC",
+  PRIVATE = "PRIVATE",
+  SHARED = "SHARED"
 }
