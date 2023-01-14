@@ -12,11 +12,6 @@ const routes: Routes = [
   {path: 'note/:id', component: NoteComponent, canActivate: [AuthGuard]},
   {path: 'notes/:username', component: NotesComponent, canActivate: [AuthGuard]},
   {path: '**', redirectTo: '/main'}
-  // {path: 'main', component: MainComponent},
-  // {path: 'new/note', component: NewNoteComponent},
-  // {path: 'note/:id', component: NoteComponent},
-  // {path: 'notes/:username', component: NotesComponent},
-  // {path: '**', redirectTo: '/main'}
 ];
 
 @NgModule({

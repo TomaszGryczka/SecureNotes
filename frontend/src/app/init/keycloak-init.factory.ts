@@ -12,7 +12,8 @@ export function initializeKeycloak(
       },
       initOptions: {
         pkceMethod: 'S256',
-        redirectUri: 'http://localhost:4200/*',
+        redirectUri: 'https://localhost:443/*',
+        // redirectUri: 'http://localhost:4200/*',
         checkLoginIframe: false
       }});
 }

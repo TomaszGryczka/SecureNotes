@@ -6,24 +6,24 @@ spring:
 
   # database connection
   datasource:
-#    url: jdbc:mysql://db:3306/notes
-    url: jdbc:mysql://localhost:3306/notes
+    url: jdbc:mysql://db:3306/notes
+#    url: jdbc:mysql://localhost:3306/notes
     username: notes
     password: notes
 
 app:
   cors:
-    allowed-origins: http://localhost:4200
-#    allowed-origins: http://localhost:80
+#    allowed-origins: http://localhost:4200
+    allowed-origins: https://localhost
   jwt:
-#    issuer-uri: http://keycloak:8080/realms/app
-    issuer-uri: http://localhost:8081/realms/app
+    issuer-uri: http://keycloak:8080/realms/app
+#    issuer-uri: http://localhost:8081/realms/app
     resource-client-ids: frontend-web
   salt: 443b25794c3954533a3550616c532f64
 
 keycloak:
-#  auth-server-url: http://keycloak:8080
-  auth-server-url: http://localhost:8081
+  auth-server-url: http://keycloak:8080
+#  auth-server-url: http://localhost:8081
   realm: app
   resource: backend
   public-client: true

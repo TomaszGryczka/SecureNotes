@@ -7,9 +7,11 @@ services:
       dockerfile: Dockerfile
     image: frontend:latest
     ports:
-      - '80:80'
+      - '443:443'
     networks:
       - network
+    volumes: 
+     - ./certs:/etc/nginx/certs
     depends_on:
       - backend
   
