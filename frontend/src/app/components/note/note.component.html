@@ -1,1 +1,17 @@
-<p>note works!</p>
+<div *ngIf="this.isEncrypted && !note" class="m-3">
+  <form (ngSubmit)="onSubmit($event)">
+    <div class="w-25">
+      <label for="password">Hasło do odszyfrowania notatki:</label>
+      <input type="password" class="form-control" id="password" placeholder="Podaj hasło..." name="password">
+    </div>
+    <div class="mt-2">
+      <button class="btn btn-primary" type="submit">ODSZYFRUJ</button>
+    </div>
+  </form>
+</div>
+<div *ngIf="note" class="m-3">
+  <div class="result-preview outline mt-3">
+    <h1>Treść notatki</h1>
+    <markdown [data]="this.note.content"></markdown>
+  </div>
+</div>

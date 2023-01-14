@@ -1,17 +1,11 @@
 package com.github.tomaszgryczka.securenotes.note;
 
-import com.github.tomaszgryczka.securenotes.keycloak.KeycloakUser;
-import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 
-import java.util.List;
-
 @Data
-@AllArgsConstructor
+@Builder
 public class NoteRequest {
+    private Long noteId;
     private String password;
-    private String content;
-
-    private NoteStatus status;
-    private List<KeycloakUser> sharedToUsers;
 }

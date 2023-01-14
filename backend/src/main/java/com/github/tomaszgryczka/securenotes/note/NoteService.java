@@ -1,12 +1,15 @@
 package com.github.tomaszgryczka.securenotes.note;
 
-import com.github.tomaszgryczka.securenotes.user.AppUser;
-import com.github.tomaszgryczka.securenotes.user.AppUserRepository;
 import com.github.tomaszgryczka.securenotes.keycloak.KeycloakUser;
 import com.github.tomaszgryczka.securenotes.keycloak.KeycloakUserService;
+import com.github.tomaszgryczka.securenotes.user.AppUser;
+import com.github.tomaszgryczka.securenotes.user.AppUserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.crypto.encrypt.Encryptors;
+import org.springframework.security.crypto.encrypt.TextEncryptor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -23,15 +26,19 @@ public class NoteService {
     private final KeycloakUserService keycloakUserService;
     private final AppUserRepository appUserRepository;
 
-    public Note saveNote(final NoteRequest noteRequest) {
+    @Value("${app.salt}")
+    private String salt;
+
+    public Note saveNote(final NoteCreationRequest noteCreationRequest) {
         final KeycloakUser noteOwner = keycloakUserService.getKeycloakUserInfoFromJwt();
         final List<AppUser> usersWithAccessToNote =
-                getUsersThatWillHaveAccessToNote(noteOwner, noteRequest.getSharedToUsers());
+                getUsersThatWillHaveAccessToNote(noteOwner, noteCreationRequest.getSharedToUsers());
+
+        final String content = decryptContentFromRequestIfNeeded(noteCreationRequest);
 
         final Note noteToAdd = Note.builder()
-                .noteStatus(noteRequest.getStatus())
-                .password(noteRequest.getPassword())
-                .content(noteRequest.getContent())
+                .noteStatus(noteCreationRequest.getStatus())
+                .content(content)
                 .users(usersWithAccessToNote)
                 .build();
 
@@ -40,9 +47,39 @@ public class NoteService {
         return noteRepository.save(noteToAdd);
     }
 
-    public Note getNoteByNoteId(final Long noteId) {
-        return noteRepository.findById(noteId).orElseThrow(() ->
-                new ResponseStatusException(HttpStatus.NOT_FOUND, "Note not found"));
+    private String decryptContentFromRequestIfNeeded(final NoteCreationRequest noteCreationRequest) {
+        if (noteCreationRequest.getStatus() == NoteStatus.ENCRYPTED) {
+            final String password = noteCreationRequest.getPassword();
+            final TextEncryptor textEncryptor = Encryptors.text(password, salt);
+
+            return textEncryptor.encrypt(noteCreationRequest.getContent());
+        } else {
+            return noteCreationRequest.getContent();
+        }
+    }
+
+    public Note getNoteByNoteId(final Long noteId, final String password) {
+        final KeycloakUser user = keycloakUserService.getKeycloakUserInfoFromJwt();
+
+        final Note note = noteRepository.getUsersNotes(user.getId()).stream()
+                .filter(it -> it.getId().equals(noteId))
+                .findFirst()
+                .orElseThrow(() ->
+                        new ResponseStatusException(HttpStatus.NOT_FOUND, "Note not found"));
+
+        if (note.getNoteStatus() == NoteStatus.ENCRYPTED) {
+            final TextEncryptor textEncryptor = Encryptors.text(password, salt);
+
+            try {
+                final String decryptedContent = textEncryptor.decrypt(note.getContent());
+                note.setContent(decryptedContent);
+            } catch (Exception ex) {
+                log.info("Bad password used for decryption of note content...");
+                throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Bad password");
+            }
+        }
+
+        return note;
     }
 
     public List<BasicNoteResponse> getUserNotes() {

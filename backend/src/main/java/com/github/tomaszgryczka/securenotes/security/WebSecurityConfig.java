@@ -27,7 +27,7 @@ public class WebSecurityConfig {
 
         http.authorizeRequests()
                 .antMatchers("/note/new").authenticated()
-                .antMatchers("/note/*").authenticated()
+                .antMatchers("/note").authenticated()
                 .antMatchers("/note/user/all").authenticated()
                 .antMatchers("/users/all").authenticated()
                 .antMatchers("/users/current").authenticated()

@@ -20,6 +20,15 @@ export class NotesGatewayService {
   getUserNotes(): Observable<Note[]> {
     return this.httpClient.get<Note[]>(this.notesApiUrl + "/user/all");
   }
+
+  getNoteById(noteId: number, password: string): Observable<Note> {
+    const body = {
+      noteId: noteId,
+      password: password
+    }
+
+    return this.httpClient.post<Note>(this.notesApiUrl, body);
+  }
 }
 
 export interface Note {

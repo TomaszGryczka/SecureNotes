@@ -13,13 +13,13 @@ public class NoteController {
     private final NoteService noteService;
 
     @PostMapping("/new")
-    public Note saveNote(@RequestBody final NoteRequest noteRequest) {
-        return noteService.saveNote(noteRequest);
+    public Note saveNote(@RequestBody final NoteCreationRequest noteCreationRequest) {
+        return noteService.saveNote(noteCreationRequest);
     }
 
-    @GetMapping("/{noteId}")
-    public Note getNoteById(@PathVariable final Long noteId) {
-        return noteService.getNoteByNoteId(noteId);
+    @PostMapping
+    public Note getNoteById(@RequestBody final NoteRequest request) {
+        return noteService.getNoteByNoteId(request.getNoteId(), request.getPassword());
     }
 
     @GetMapping("/user/all")

@@ -9,6 +9,6 @@ import java.util.List;
 @Repository
 public interface NoteRepository extends JpaRepository<Note, Long> {
 
-    @Query("SELECT note FROM Note note JOIN note.users users where users.id = ?1")
+    @Query("SELECT note FROM Note note JOIN note.users users WHERE users.id = ?1 OR note.noteStatus = 1")
     List<Note> getUsersNotes(String userId);
 }

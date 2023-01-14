@@ -19,6 +19,7 @@ app:
 #    issuer-uri: http://keycloak:8080/realms/app
     issuer-uri: http://localhost:8081/realms/app
     resource-client-ids: frontend-web
+  salt: 443b25794c3954533a3550616c532f64
 
 keycloak:
 #  auth-server-url: http://keycloak:8080

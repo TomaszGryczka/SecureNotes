@@ -36,6 +36,7 @@ dependencies {
 	implementation 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.9.8'
 	implementation group: 'org.keycloak', name: 'keycloak-admin-client', version: '20.0.1'
 //	annotationProcessor group: 'org.springframework.boot', name: 'spring-boot-configuration-processor'
+	implementation 'org.springframework.security:spring-security-crypto:6.0.1'
 }
 
 tasks.named('test') {

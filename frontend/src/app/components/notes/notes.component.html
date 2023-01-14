@@ -1,7 +1,8 @@
 <h1>Wybierz notatkę z listy</h1>
 <ul>
   <li *ngFor="let note of userNotes">
-    <a href="#"> Notatka {{note.id}}</a>
-    <span class="text-lowercase"> ({{getNoteLabel(note.status)}})</span>
+    <a class="text-uppercase fw-bold" [routerLink]="['/note', note.id]" [queryParams]="{status: note.status}">
+      Notatka {{note.id}}</a>
+    <span class="text-lowercase"> ({{getNoteLabel(note)}})</span>
   </li>
 </ul>

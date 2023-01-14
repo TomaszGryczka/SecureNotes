@@ -21,7 +21,6 @@ public class Note {
     @Column(name = "note_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String password;
     private NoteStatus noteStatus;
 
     @Column(length = 65535, columnDefinition="TEXT")
