@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -32,7 +33,7 @@ public class NoteService {
     public Note saveNote(final NoteCreationRequest noteCreationRequest) {
         final KeycloakUser noteOwner = keycloakUserService.getKeycloakUserInfoFromJwt();
         final List<AppUser> usersWithAccessToNote =
-                getUsersThatWillHaveAccessToNote(noteOwner, noteCreationRequest.getSharedToUsers());
+                getUsersThatWillHaveAccessToNote(noteOwner, noteCreationRequest);
 
         final String content = decryptContentFromRequestIfNeeded(noteCreationRequest);
 
@@ -95,7 +96,10 @@ public class NoteService {
     }
 
     private List<AppUser> getUsersThatWillHaveAccessToNote(final KeycloakUser noteOwner,
-                                                           final List<KeycloakUser> usersWithAccessToNote) {
+                                                           final NoteCreationRequest request) {
+
+        final List<KeycloakUser> usersWithAccessToNote = request.getStatus() == NoteStatus.SHARED
+                ? request.getSharedToUsers() : Collections.emptyList();
 
         final List<AppUser> appUsers = usersWithAccessToNote.stream()
                 .map(this::findOrCreateAppUserInDb).collect(Collectors.toList());
