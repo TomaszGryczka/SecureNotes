@@ -13,7 +13,7 @@ public class KeycloakAdminConfig {
     private static final String MASTER_REALM_NAME = "master";
     private static final String CLIENT_ID = "admin-cli";
     private static final String ADMIN_USERNAME = "admin";
-    private static final String ADMIN_PASSWORD = "admin";
+    private static final String ADMIN_PASSWORD = "7d5!9NW8HinSHu";
 
     @Value("${keycloak.auth-server-url}")
     private String serverUrl;

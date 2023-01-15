@@ -30,8 +30,6 @@ services:
         condition: service_healthy
       keycloak:
         condition: service_healthy
-      keycloak-initializer:
-        condition: service_completed_successfully
 
   db:
     container_name: mysql-notes-app
@@ -52,29 +50,9 @@ services:
     networks:
       - network
 
-  keycloak-initializer:
-    container_name: keycloakinitializer-notes-app
-    build:
-      context: keycloakinitializer
-      dockerfile: Dockerfile
-    image: keycloakinitializer:latest
-    networks:
-      - network
-    depends_on:
-      keycloak:
-        condition: service_healthy
-
   keycloak:
     container_name: keycloak-notes-app
-    image: quay.io/keycloak/keycloak:20.0.1
-    environment:
-      - KEYCLOAK_ADMIN=admin
-      - KEYCLOAK_ADMIN_PASSWORD=admin
-      - KC_DB=mysql
-      - KC_DB_URL_HOST=keycloak-db
-      - KC_DB_URL_DATABASE=keycloak
-      - KC_DB_USERNAME=keycloak
-      - KC_DB_PASSWORD=password
+    image: tumekooo/sacure-notes
     command: start-dev
     ports:
       - '8081:8080'
