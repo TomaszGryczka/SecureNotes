@@ -3,7 +3,7 @@ FROM openjdk:17-alpine as builder
 WORKDIR app
 
 COPY gradlew .
-COPY .gradle .gradle
+# COPY .gradle .
 COPY build.gradle .
 COPY gradle gradle
 COPY gradlew.bat .
