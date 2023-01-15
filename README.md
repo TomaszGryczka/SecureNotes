@@ -10,10 +10,17 @@ docker compose up
 ```
 
 ## Domyślni użytkownicy
-Po lewej login, po prawej hasło:
-```
-user : 12!@QWqwe
-```
-```
-test : 12!@QWqwe
-```
+<table border="0">
+ <tr>
+    <td><b style="font-size:30px">Login</b></td>
+    <td><b style="font-size:30px">Hasło</b></td>
+ </tr>
+ <tr>
+    <td>user</td>
+    <td>12!@QWqwe</td>
+ </tr>
+  <tr>
+    <td>test</td>
+    <td>12!@QWqwe</td>
+ </tr>
+</table>
