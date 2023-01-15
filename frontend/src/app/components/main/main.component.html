@@ -1,4 +1,4 @@
-<div class="ms-3">
+<div class="ms-3" *ngIf="username">
   <h1>Zalogowany jako {{username}}</h1>
   <div>
     <button class="btn btn-primary" [routerLink]="['/notes', username]" routerLinkActive="active">

@@ -1,4 +1,5 @@
 import {Component, OnInit} from '@angular/core';
+import {UsersGatewayService} from "../../services/users-gateway.service";
 
 @Component({
   selector: 'app-main',
@@ -7,13 +8,15 @@ import {Component, OnInit} from '@angular/core';
 })
 export class MainComponent implements OnInit {
 
-  username: string;
+  username?: string;
 
-  constructor() {
-    this.username = "tomasz";
+  constructor(private userGateway: UsersGatewayService) {
   }
 
   ngOnInit(): void {
+    this.userGateway.getCurrentUser().subscribe(keycloakUser => {
+      this.username = keycloakUser.username;
+    });
   }
 
 }
