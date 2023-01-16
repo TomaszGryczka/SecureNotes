@@ -24,3 +24,9 @@ docker compose up
     <td>12!@QWqwe</td>
  </tr>
 </table>
+
+## Aplikacja
+Dostępna pod:
+```
+https://localhost:443
+```
